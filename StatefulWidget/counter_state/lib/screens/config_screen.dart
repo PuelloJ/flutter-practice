@@ -17,9 +17,17 @@ class ConfigScreen extends StatefulWidget {
 }
 
 class _ConfigScreenState extends State<ConfigScreen> {
-  final TextEditingController valueTextController = TextEditingController();
+  late TextEditingController valueTextController;
   bool validate = true;
-  int? counterTem;
+  int? previousValue;
+
+  @override
+  void initState() {
+    super.initState();
+    valueTextController =
+        TextEditingController(text: widget.counter.toString());
+    previousValue = widget.counter;
+  }
 
   @override
   void dispose() {
@@ -27,48 +35,62 @@ class _ConfigScreenState extends State<ConfigScreen> {
     super.dispose();
   }
 
+  void _resetCounter() {
+    widget.resetValue();
+    setState(() {
+      valueTextController.text = "0";
+      validate = true;
+    });
+  }
+
+  void _updateCounter() {
+    final value = int.tryParse(valueTextController.text);
+    if (value == null) {
+      setState(() {
+        validate = false;
+      });
+      return;
+    }
+    widget.addCustomValue(value);
+    setState(() {
+      validate = true;
+      previousValue = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    counterTem = widget.counter;
     return GestureDetector(
-      onTap: FocusScope.of(context).unfocus,
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Config counter"),
           actions: [
             IconButton(
-              onPressed: () {
-                // if (!validate) return;
-                widget.resetValue();
-                setState(() {
-                  valueTextController.text = "0";
-                  validate = true;
-                });
-                print(valueTextController.text);
-              },
+              onPressed: _resetCounter,
               icon: const Icon(Icons.refresh_rounded),
             )
           ],
         ),
         body: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  valueTextController.text.isNotEmpty && validate
-                      ? valueTextController.text
-                      : counterTem.toString(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 100),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: TextField(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    valueTextController.text.isNotEmpty && validate
+                        ? valueTextController.text
+                        : previousValue.toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 100),
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  TextField(
                     controller: valueTextController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -84,23 +106,15 @@ class _ConfigScreenState extends State<ConfigScreen> {
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                FilledButton(
-                    onPressed: () {
-                      int? valueParse = int.tryParse(valueTextController.text);
-                      validate = valueParse != null && !valueParse.isNaN;
-                      if (validate) {
-                        widget.addCustomValue(valueParse!);
-                        counterTem = valueParse;
-                      }
-
-                      setState(() {});
-                    },
-                    child: const Text("ACEPTAR")),
-              ],
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  FilledButton(
+                    onPressed: _updateCounter,
+                    child: const Text("Actualizar contador"),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -23,6 +23,32 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Widget _buildIncrementButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        setState(() {
+          counter++;
+        });
+      },
+      heroTag: "increment",
+      tooltip: "Incrementar contador",
+      child: const Icon(Icons.plus_one_rounded),
+    );
+  }
+
+  Widget _buildDecrementButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        setState(() {
+          counter--;
+        });
+      },
+      heroTag: "decrement",
+      tooltip: "Decrementar contador",
+      child: const Icon(Icons.exposure_minus_1_rounded),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,29 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                counter++;
-              });
-            },
-            heroTag: "increment",
-            tooltip: "Incrementar contador",
-            child: const Icon(Icons.plus_one_rounded),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                counter--;
-              });
-            },
-            heroTag: "decrement",
-            tooltip: "Decrementar contador",
-            child: const Icon(Icons.exposure_minus_1_rounded),
-          ),
+          _buildIncrementButton(),
+          const SizedBox(height: 10),
+          _buildDecrementButton(),
         ],
       ),
     );
