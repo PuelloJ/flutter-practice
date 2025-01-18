@@ -1,6 +1,6 @@
 const String path = "assets/images/";
 
-const List<Map<String, dynamic>> imageInfo = [
+const List<Map<String, dynamic>> localImageData = [
   {
     'imageUrl': "${path}ilustration.jpg",
     'name': 'Ilustration',
