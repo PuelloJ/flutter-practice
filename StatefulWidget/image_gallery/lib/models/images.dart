@@ -1,9 +1,19 @@
-class Images {
+class ImageModel {
+  final String imageUrl;
   final String name;
-  final String imagePath;
 
-  Images({
+  ImageModel({
+    required this.imageUrl,
     required this.name,
-    required this.imagePath,
   });
+
+  factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
+        imageUrl: json["imageUrl"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "imageUrl": imageUrl,
+        "name": name,
+      };
 }
