@@ -1,22 +1,40 @@
 const String path = "assets/images/";
 
-const List<String> imagePath = [
-  "${path}gummy-apple-watch.png",
-  "${path}gummy-bed.png",
-  "${path}gummy-calculator.png",
-  "${path}gummy-designer-tools-1.png",
-  "${path}gummy-designer-tools.png",
-  "${path}gummy-desktop.png",
-  "${path}gummy-macintosh.png",
-  "${path}gummy-office-bag.png",
-  "${path}gummy-programming.png",
-  "${path}gummy-stationary-set-1.png",
-  "${path}gummy-super-nintendo-gamepad.png",
-  "${path}gummy-ux-slash-ui-design.png",
-  "${path}gummy-vintage-camera.png",
-  "${path}gummy-virus.png",
-  "${path}gummy-wallet.png",
-  "${path}gummy-work-from-home-1.png",
-  "${path}gummy-work-from-home.png",
-  "${path}ilustration1.jpg",
+const List<Map<String, dynamic>> imageInfo = [
+  {
+    'imageUrl': "${path}ilustration.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration1.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration2.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration3.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration4.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration5.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration6.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration7.jpg",
+    'name': 'Ilustration',
+  },
+  {
+    'imageUrl': "${path}ilustration8.jpg",
+    'name': 'Ilustration',
+  },
 ];

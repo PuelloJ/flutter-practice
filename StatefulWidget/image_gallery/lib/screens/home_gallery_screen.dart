@@ -10,19 +10,17 @@ class HomeGalleryScreen extends StatefulWidget {
 }
 
 class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
-
-  final CarouselController carouselController = CarouselController(initialItem: 1); 
+  final CarouselController carouselController =
+      CarouselController(initialItem: 1);
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
-final double height = MediaQuery.sizeOf(context).height;
+    final double height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,46 +37,45 @@ final double height = MediaQuery.sizeOf(context).height;
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-                    ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: height / 3),
-          child: CarouselView(
-            backgroundColor: Colors.blueAccent,
-            controller: carouselController,
-            itemSnapping: true,
-            
-            // flexWeights: const <int>[1, 7, 1],
-            itemExtent: height * 0.4,
-            children: imagePath.map((image) {
-              return HeroLayoutCard(imageInfo: image);
-            }).toList(),
-          ),
-        ),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: height / 3),
+              child: CarouselView(
+                backgroundColor: Colors.blueAccent,
+                controller: carouselController,
+                itemSnapping: true,
+
+                // flexWeights: const <int>[1, 7, 1],
+                itemExtent: height * 0.3,
+                children: imageInfo.map((image) {
+                  return HeroLayoutCard(imageInfo: image);
+                }).toList(),
+              ),
+            ),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
-                itemCount: imagePath.length,
+                itemCount: imageInfo.length,
                 itemBuilder: (context, index) {
-                  final String imagepath = imagePath[index];
+                  final Map<String, dynamic> imagepath = imageInfo[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GridTile(
-                      header: Align(
+                      header: const Align(
                         alignment: Alignment.centerRight,
                         child: Icon(Icons.info_outline_rounded),
                       ),
-                      footer: const Text(
-                        "Nombre imagen",
+                      footer: Text(
+                        imagepath['name'],
                         textAlign: TextAlign.center,
                       ),
                       child: Container(
-                        margin: EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(20),
-                            
-                            ),
-                        child: Image.asset(imagepath),
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Image.asset(imagepath['imageUrl']),
                       ),
                     ),
                   );
@@ -98,52 +95,53 @@ class HeroLayoutCard extends StatelessWidget {
     required this.imageInfo,
   });
 
-  final String imageInfo;
+  final Map<String, dynamic> imageInfo;
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.sizeOf(context).width;
     return Stack(
-        alignment: AlignmentDirectional.bottomStart,
-        children: <Widget>[
-          ClipRect(
-            child: OverflowBox(
-              maxWidth: width,
-              minWidth: width ,
-              child: Image(
-                fit: BoxFit.cover,
-                image: AssetImage(imageInfo),
+      alignment: AlignmentDirectional.bottomStart,
+      children: <Widget>[
+        ClipRect(
+          child: OverflowBox(
+            maxWidth: width,
+            minWidth: width,
+            child: Image(
+              fit: BoxFit.cover,
+              image: AssetImage(imageInfo['imageUrl']),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                imageInfo['name'],
+                overflow: TextOverflow.clip,
+                softWrap: false,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(color: Colors.white),
               ),
-            ),
+              const SizedBox(height: 10),
+              Text(
+                "Subtitulo",
+                overflow: TextOverflow.clip,
+                softWrap: false,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Colors.white),
+              )
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  "Imagen 1",
-                  overflow: TextOverflow.clip,
-                  softWrap: false,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineLarge
-                      ?.copyWith(color: Colors.white),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Subtitulo",
-                  overflow: TextOverflow.clip,
-                  softWrap: false,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.white),
-                )
-              ],
-            ),
-          ),
-        ]);
+        ),
+      ],
+    );
   }
 }
