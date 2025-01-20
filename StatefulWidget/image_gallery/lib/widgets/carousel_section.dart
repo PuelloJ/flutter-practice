@@ -1,26 +1,16 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
+import 'package:image_gallery/widgets/shared/custom_linear_gradient.dart';
+import 'package:image_gallery/widgets/text_carousel_section.dart';
 
-class CarouselSection extends StatefulWidget {
+class CarouselSection extends StatelessWidget {
   const CarouselSection({
     super.key,
     required this.images,
   });
 
   final List<ImageModel> images;
-
-  @override
-  State<CarouselSection> createState() => _CarouselSectionState();
-}
-
-class _CarouselSectionState extends State<CarouselSection> {
-  CarouselController carouselController = CarouselController(initialItem: 1);
-
-  @override
-  void dispose() {
-    carouselController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +20,6 @@ class _CarouselSectionState extends State<CarouselSection> {
       constraints: BoxConstraints(maxHeight: height / 5),
       child: CarouselView(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-        controller: carouselController,
         itemSnapping: true,
         itemExtent: height * 0.3,
         children: _buildHeroLayoutCards(),
@@ -39,7 +28,7 @@ class _CarouselSectionState extends State<CarouselSection> {
   }
 
   List<Widget> _buildHeroLayoutCards() {
-    return widget.images.map((image) {
+    return images.map((image) {
       return HeroLayoutCard(imageInfo: image);
     }).toList();
   }
@@ -55,49 +44,54 @@ class HeroLayoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTitle =
+        Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white);
+    final textBody =
+        Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white);
+
     final double width = MediaQuery.sizeOf(context).width;
-    return Stack(
-      alignment: AlignmentDirectional.bottomStart,
-      children: <Widget>[
-        ClipRect(
-          child: OverflowBox(
-            maxWidth: width,
-            minWidth: width,
-            child: Image(
-              fit: BoxFit.cover,
-              image: AssetImage(imageInfo.imageUrl),
+
+    return ZoomIn(
+      child: Stack(
+        alignment: AlignmentDirectional.bottomStart,
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            clipBehavior: Clip.antiAlias,
+            child: OverflowBox(
+              maxWidth: width,
+              minWidth: width,
+              child: Image(
+                fit: BoxFit.cover,
+                image: AssetImage(imageInfo.imageUrl),
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                imageInfo.name,
-                overflow: TextOverflow.clip,
-                softWrap: false,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge
-                    ?.copyWith(color: Colors.white),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                imageInfo.description,
-                overflow: TextOverflow.clip,
-                softWrap: false,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: Colors.white),
-              )
-            ],
+          const CustomLinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.4, 1.0],
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                CustomTextSection(
+                  label: imageInfo.name,
+                  textStyle: textTitle,
+                ),
+                const SizedBox(height: 10),
+                CustomTextSection(
+                  label: imageInfo.description,
+                  textStyle: textBody,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
