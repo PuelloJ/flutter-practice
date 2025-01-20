@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_gallery/config/app_theme.dart';
+// import 'package:image_gallery/config/app_theme.dart';
 import 'package:image_gallery/screens/home_gallery_screen.dart';
 
 void main() {
