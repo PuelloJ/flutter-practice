@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_gallery/config/utils.dart';
 import 'package:image_gallery/models/images.dart';
+import 'package:image_gallery/services/local_image_service.dart';
 import 'package:image_gallery/widgets/carousel_section.dart';
 import 'package:image_gallery/widgets/image_grid.dart';
 
@@ -30,7 +30,7 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
 
   Future<void> _loadImages() async {
     await Future.delayed(const Duration(seconds: 2));
-    images = await getImages();
+    images = await getLocalImages();
     setState(() {
       isLoading = false;
     });
@@ -40,6 +40,7 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 6.0,
         title: const Text(
           "Galeria de imagenes",
           style: TextStyle(fontSize: 25),
