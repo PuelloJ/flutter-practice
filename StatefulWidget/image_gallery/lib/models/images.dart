@@ -1,7 +1,7 @@
 class ImageModel {
   final String imageUrl;
   final String name;
-  final int likes;
+  final bool favorite;
   final String author;
   final String source;
   final String description;
@@ -12,7 +12,7 @@ class ImageModel {
   ImageModel({
     required this.imageUrl,
     required this.name,
-    required this.likes,
+    required this.favorite,
     required this.author,
     required this.source,
     required this.description,
@@ -24,7 +24,7 @@ class ImageModel {
   factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
         imageUrl: json["imageUrl"],
         name: json["name"],
-        likes: json["likes"],
+        favorite: json["favorite"],
         author: json["author"],
         source: json["source"],
         description: json["description"],
@@ -32,4 +32,8 @@ class ImageModel {
         location: json["location"],
         camera: json["camera"],
       );
+
+  set favorite(bool value) {
+    favorite = value;
+  }
 }
