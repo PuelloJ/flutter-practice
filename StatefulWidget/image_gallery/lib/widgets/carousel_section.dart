@@ -28,7 +28,7 @@ class CarouselSection extends StatelessWidget {
   }
 
   List<Widget> _buildHeroLayoutCards() {
-    return images.map((image) {
+    return images.where((image) => image.favorite).map((image) {
       return HeroLayoutCard(imageInfo: image);
     }).toList();
   }

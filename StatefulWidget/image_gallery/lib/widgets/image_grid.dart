@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/widgets/shared/custom_dialog.dart';
-import 'package:image_gallery/widgets/shared/custom_linear_gradient.dart';
 
 class ImageGridSection extends StatelessWidget {
   const ImageGridSection({
@@ -17,9 +16,7 @@ class ImageGridSection extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
+        crossAxisCount: 3,
       ),
       itemCount: images.length,
       itemBuilder: (context, index) {
@@ -30,9 +27,24 @@ class ImageGridSection extends StatelessWidget {
   }
 }
 
-class _ImageCardDetail extends StatelessWidget {
-  const _ImageCardDetail({required this.image});
+class _ImageCardDetail extends StatefulWidget {
+  const _ImageCardDetail({
+    required this.image,
+  });
   final ImageModel image;
+
+  @override
+  State<_ImageCardDetail> createState() => _ImageCardDetailState();
+}
+
+class _ImageCardDetailState extends State<_ImageCardDetail> {
+  double opacity = 1.0;
+
+  void _changeOpacity(double value) {
+    setState(() {
+      opacity = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,35 +54,41 @@ class _ImageCardDetail extends StatelessWidget {
       child: Card(
         clipBehavior: Clip.hardEdge,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
-          onTap: () => showDialog(
-            context: context,
-            builder: (context) => CustomDialog(image: image),
-          ),
+        child: GestureDetector(
+          onTap: () async {
+            _changeOpacity(0.4);
+            showDialog(
+              context: context,
+              builder: (context) => CustomDialog(image: widget.image),
+            );
+            await Future.delayed(const Duration(milliseconds: 200));
+            _changeOpacity(1.0);
+          },
           child: Stack(
             children: [
-              SizedBox(
-                height: double.infinity,
-                width: double.infinity,
+              Opacity(
+                opacity: opacity,
                 child: Image.asset(
-                  image.imageUrl,
+                  widget.image.imageUrl,
                   fit: BoxFit.cover,
                 ),
-              ),
-              const CustomLinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                stops: [0.1, 0.5],
-                colors: [Colors.black38, Colors.transparent],
               ),
               Positioned(
                 top: 10,
                 right: 10,
-                child: Icon(
-                  Icons.info_outline_rounded,
-                  color: color.surface,
-                ),
+                child: widget.image.favorite
+                    ? Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                            color: color.primaryContainer,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Icon(
+                          Icons.bookmark,
+                          color: color.primary,
+                          size: 15,
+                        ),
+                      )
+                    : const SizedBox(),
               ),
             ],
           ),

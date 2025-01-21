@@ -3,6 +3,8 @@ import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';
 import 'package:image_gallery/widgets/carousel_section.dart';
 import 'package:image_gallery/widgets/image_grid.dart';
+import 'package:image_gallery/widgets/shared/custom_dialog.dart';
+import 'package:image_gallery/widgets/shared/custom_dialog_form.dart';
 
 class HomeGalleryScreen extends StatefulWidget {
   const HomeGalleryScreen({
@@ -69,9 +71,7 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
                   images: images,
                 ),
                 Expanded(
-                  child: ImageGridSection(
-                    images: images,
-                  ),
+                  child: ImageGridSection(images: images),
                 )
               ],
             ),
@@ -86,7 +86,10 @@ class _FloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () {},
+      onPressed: () => showDialog(
+        context: context,
+        builder: (context) => const CustomDialogForm(),
+      ),
       icon: const Icon(Icons.add_a_photo_outlined),
       label: const Text('Agregar imagen'),
     );
