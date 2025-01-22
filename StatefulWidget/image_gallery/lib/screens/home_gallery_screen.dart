@@ -1,9 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';
 import 'package:image_gallery/widgets/carousel_section.dart';
 import 'package:image_gallery/widgets/image_grid.dart';
-import 'package:image_gallery/widgets/shared/custom_dialog.dart';
 import 'package:image_gallery/widgets/shared/custom_dialog_form.dart';
 
 class HomeGalleryScreen extends StatefulWidget {
@@ -35,6 +36,12 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
     images = await getLocalImages();
     setState(() {
       isLoading = false;
+    });
+  }
+
+  void _addImage(ImageModel image) {
+    setState(() {
+      images.add(image);
     });
   }
 
@@ -75,20 +82,33 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
                 )
               ],
             ),
-      floatingActionButton: const _FloatingButton(),
+      floatingActionButton: _FloatingButton(_addImage),
     );
   }
 }
 
 class _FloatingButton extends StatelessWidget {
-  const _FloatingButton();
+  const _FloatingButton(this._addImage);
+
+  final void Function(ImageModel) _addImage;
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () => showDialog(
+      onPressed: () => showGeneralDialog(
         context: context,
-        builder: (context) => const CustomDialogForm(),
+        barrierDismissible: false,
+        pageBuilder: (ctx, anim1, anim2) => CustomDialogForm(
+          addImage: _addImage,
+        ),
+        transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+          filter: ImageFilter.blur(
+              sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+          child: FadeTransition(
+            opacity: anim1,
+            child: child,
+          ),
+        ),
       ),
       icon: const Icon(Icons.add_a_photo_outlined),
       label: const Text('Agregar imagen'),
