@@ -67,12 +67,18 @@ class _ImageCardDetailState extends State<_ImageCardDetail> {
           child: Stack(
             children: [
               Opacity(
-                opacity: opacity,
-                child: Image.asset(
-                  widget.image.imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  opacity: opacity,
+                  child: SizedBox.expand(
+                    child: widget.image.imageType == ImageType.asset
+                        ? Image.asset(
+                            widget.image.imageUrl!,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            widget.image.imageFile!,
+                            fit: BoxFit.cover,
+                          ),
+                  )),
               Positioned(
                 top: 10,
                 right: 10,

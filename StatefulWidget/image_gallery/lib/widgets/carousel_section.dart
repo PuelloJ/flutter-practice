@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
+import 'package:image_gallery/widgets/shared/custom_dialog.dart';
 import 'package:image_gallery/widgets/shared/custom_linear_gradient.dart';
 import 'package:image_gallery/widgets/text_carousel_section.dart';
 
@@ -19,6 +20,14 @@ class CarouselSection extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: height / 5),
       child: CarouselView(
+        onTap: (value) {
+          showDialog(
+            context: context,
+            builder: (context) => CustomDialog(
+              image: images.where((image) => image.favorite).elementAt(value),
+            ),
+          );
+        },
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         itemSnapping: true,
         itemExtent: height * 0.3,
@@ -61,10 +70,17 @@ class HeroLayoutCard extends StatelessWidget {
             child: OverflowBox(
               maxWidth: width,
               minWidth: width,
-              child: Image(
-                fit: BoxFit.cover,
-                image: AssetImage(imageInfo.imageUrl),
-              ),
+              child: imageInfo.imageType == ImageType.asset
+                  ? Image(
+                      fit: BoxFit.cover,
+                      image: AssetImage(imageInfo.imageUrl!),
+                    )
+                  : Image(
+                      image: FileImage(
+                        imageInfo.imageFile!,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           const CustomLinearGradient(

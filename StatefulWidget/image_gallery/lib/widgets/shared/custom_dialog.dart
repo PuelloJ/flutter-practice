@@ -22,7 +22,9 @@ class CustomDialog extends StatelessWidget {
       child: AlertDialog(
         clipBehavior: Clip.antiAlias,
         actionsAlignment: MainAxisAlignment.spaceBetween,
-        contentPadding: const EdgeInsets.all(0),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        titlePadding: const EdgeInsets.all(0),
         actions: [
           IconButton(
             onPressed: () {},
@@ -40,87 +42,80 @@ class CustomDialog extends StatelessWidget {
             icon: const Icon(Icons.file_download_outlined),
           ),
         ],
+        title: image.imageType == ImageType.asset
+            ? Image.asset(
+                image.imageUrl!,
+                fit: BoxFit.cover,
+              )
+            : Image.file(
+                image.imageFile!,
+                fit: BoxFit.cover,
+                height: 300,
+                width: 400,
+              ),
         content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              image.imageUrl,
-              fit: BoxFit.cover,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Row(
                 children: [
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        _LabelImageInformation(
-                          label: image.location,
-                          textTheme: textTheme,
-                          icon: Icons.location_on_outlined,
-                        ),
-                        const _CustomVerticalDivider(),
-                        _LabelImageInformation(
-                          label: DateFormat.yMd('es').format(image.date),
-                          textTheme: textTheme,
-                          icon: Icons.date_range_outlined,
-                        ),
-                        const _CustomVerticalDivider(),
-                        _LabelImageInformation(
-                          label: image.source,
-                          textTheme: textTheme,
-                          icon: Icons.source_outlined,
-                        ),
-                        const _CustomVerticalDivider(),
-                        _LabelImageInformation(
-                          label: image.camera,
-                          textTheme: textTheme,
-                          icon: Icons.camera_alt_outlined,
-                        ),
-                      ],
-                    ),
+                  _LabelImageInformation(
+                    label: image.location,
+                    textTheme: textTheme,
+                    icon: Icons.location_on_outlined,
                   ),
-                  const SizedBox(
-                    height: 10,
+                  _LabelImageInformation(
+                    label: DateFormat.yMd('es').format(image.date!),
+                    textTheme: textTheme,
+                    icon: Icons.date_range_outlined,
                   ),
-                  CustomTextSection(
-                    label: image.name,
-                    textStyle: textTheme.titleLarge?.copyWith(fontSize: 30),
-                    maxLines: 2,
+                  _LabelImageInformation(
+                    label: image.source,
+                    textTheme: textTheme,
+                    icon: Icons.source_outlined,
                   ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        const TextSpan(text: "By "),
-                        TextSpan(
-                          text: image.author,
-                          style: TextStyle(
-                            color: color,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        )
-                      ],
-                      style: textTheme.titleSmall,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  CustomTextSection(
-                    label: "Descripción",
-                    textStyle: textTheme.titleMedium,
-                  ),
-                  CustomTextSection(
-                    label: image.description,
-                    textStyle: textTheme.labelSmall,
-                    maxLines: 3,
+                  _LabelImageInformation(
+                    label: image.camera,
+                    textTheme: textTheme,
+                    icon: Icons.camera_alt_outlined,
                   ),
                 ],
               ),
-            )
+            ),
+            const SizedBox(height: 10),
+            CustomTextSection(
+              label: image.name,
+              textStyle: textTheme.titleLarge?.copyWith(fontSize: 30),
+              maxLines: 2,
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  const TextSpan(text: "By "),
+                  TextSpan(
+                    text: image.author,
+                    style: TextStyle(
+                      color: color,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  )
+                ],
+                style: textTheme.titleSmall,
+              ),
+            ),
+            const SizedBox(height: 15),
+            CustomTextSection(
+              label: "Descripción",
+              textStyle: textTheme.titleMedium,
+            ),
+            CustomTextSection(
+              label: image.description,
+              textStyle: textTheme.labelSmall,
+              maxLines: 3,
+            ),
           ],
         ),
       ),
@@ -154,26 +149,29 @@ class _LabelImageInformation extends StatelessWidget {
     required this.icon,
   });
 
-  final String label;
+  final String? label;
   final TextTheme textTheme;
   final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: 15,
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        CustomTextSection(
-          label: label,
-          textStyle: textTheme.bodyMedium,
-        ),
-      ],
-    );
+    return label != null
+        ? Row(
+            children: [
+              Icon(
+                icon,
+                size: 15,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              CustomTextSection(
+                label: label!,
+                textStyle: textTheme.bodyMedium,
+              ),
+              const _CustomVerticalDivider(),
+            ],
+          )
+        : const SizedBox();
   }
 }
