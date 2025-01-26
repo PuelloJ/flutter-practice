@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
@@ -57,9 +59,20 @@ class _ImageCardDetailState extends State<_ImageCardDetail> {
         child: GestureDetector(
           onTap: () async {
             _changeOpacity(0.4);
-            showDialog(
+            showGeneralDialog(
               context: context,
-              builder: (context) => CustomDialog(image: widget.image),
+              barrierDismissible: false,
+              pageBuilder: (ctx, anim1, anim2) => CustomDialog(
+                image: widget.image,
+              ),
+              transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                filter: ImageFilter.blur(
+                    sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                child: FadeTransition(
+                  opacity: anim1,
+                  child: child,
+                ),
+              ),
             );
             await Future.delayed(const Duration(milliseconds: 200));
             _changeOpacity(1.0);
@@ -69,7 +82,7 @@ class _ImageCardDetailState extends State<_ImageCardDetail> {
               Opacity(
                   opacity: opacity,
                   child: SizedBox.expand(
-                    child: widget.image.imageType == ImageType.asset
+                    child: widget.image.imageUrl != null
                         ? Image.asset(
                             widget.image.imageUrl!,
                             fit: BoxFit.cover,

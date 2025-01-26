@@ -21,12 +21,21 @@ class CarouselSection extends StatelessWidget {
       constraints: BoxConstraints(maxHeight: height / 5),
       child: CarouselView(
         onTap: (value) {
-          showDialog(
-            context: context,
-            builder: (context) => CustomDialog(
-              image: images.where((image) => image.favorite).elementAt(value),
-            ),
-          );
+          showGeneralDialog(
+              context: context,
+              barrierDismissible: false,
+              pageBuilder: (ctx, anim1, anim2) => CustomDialog(
+                image: images.where((image) => image.favorite).elementAt(value),
+              ),
+              transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                filter: ImageFilter.blur(
+                    sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                child: FadeTransition(
+                  opacity: anim1,
+                  child: child,
+                ),
+              ),
+            );
         },
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         itemSnapping: true,
@@ -70,7 +79,7 @@ class HeroLayoutCard extends StatelessWidget {
             child: OverflowBox(
               maxWidth: width,
               minWidth: width,
-              child: imageInfo.imageType == ImageType.asset
+              child: imageInfo.imageUrl != null
                   ? Image(
                       fit: BoxFit.cover,
                       image: AssetImage(imageInfo.imageUrl!),

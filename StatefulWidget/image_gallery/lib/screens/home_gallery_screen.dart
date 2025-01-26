@@ -23,7 +23,6 @@ class HomeGalleryScreen extends StatefulWidget {
 
 class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
   List<ImageModel> images = [];
-  bool isLoading = true;
 
   @override
   void initState() {
@@ -34,9 +33,7 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
   Future<void> _loadImages() async {
     await Future.delayed(const Duration(seconds: 2));
     images = await getLocalImages();
-    setState(() {
-      isLoading = false;
-    });
+    setState(() {});
   }
 
   void _addImage(ImageModel image) {
@@ -65,7 +62,7 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
           )
         ],
       ),
-      body: isLoading
+      body: images.isEmpty
           ? const Center(
               child: CircularProgressIndicator(
                 strokeWidth: 2,
@@ -111,7 +108,7 @@ class _FloatingButton extends StatelessWidget {
         ),
       ),
       icon: const Icon(Icons.add_a_photo_outlined),
-      label: const Text('Agregar imagen'),
+      label: const Text('AGREGAR IMAGEN'),
     );
   }
 }
