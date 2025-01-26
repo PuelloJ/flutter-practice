@@ -1,33 +1,53 @@
 import 'dart:io';
 
-enum ImageType { file, asset }
-
 class ImageModel {
-  final String? imageUrl;
+  final String? imageUrl; // Para imágenes de assets o URLs.
+  final File? imageFile; // Para imágenes cargadas por el usuario.
   final String name;
-  final bool favorite;
+  final DateTime date;
+  bool favorite;
   final String author;
-  final String? source;
   final String description;
-  final DateTime? date;
+  final String? source;
   final String? location;
   final String? camera;
-  final ImageType imageType;
-  final File? imageFile;
 
   ImageModel({
-    this.imageUrl,
     required this.name,
-    required this.favorite,
     required this.author,
-    required this.source,
     required this.description,
     required this.date,
-    required this.imageType,
+    required this.favorite,
+    this.imageUrl,
+    this.imageFile,
+    this.source,
     this.location,
     this.camera,
-    this.imageFile,
   });
+
+  factory ImageModel.fromUser(
+    File? imageFile, {
+    required String name,
+    bool favorite = false,
+    required String author,
+    required String description,
+    DateTime? date,
+    String? source,
+    String? location,
+    String? camera,
+  }) =>
+      ImageModel(
+        imageFile: imageFile,
+        name: name,
+        favorite: favorite,
+        author: author,
+        description: description,
+        source: source,
+        date:
+            date ?? DateTime.now(),
+        location: location,
+        camera: camera,
+      );
 
   factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
         imageUrl: json["imageUrl"],
@@ -36,13 +56,12 @@ class ImageModel {
         author: json["author"],
         source: json["source"],
         description: json["description"],
-        date: DateTime.parse(json["date"]),
+        date: DateTime.parse(json['date']),
         location: json["location"],
         camera: json["camera"],
-        imageType: ImageType.asset,
       );
 
-  set favorite(bool value) {
-    favorite = value;
+  void toggleFavorite() {
+    favorite = !favorite;
   }
 }
