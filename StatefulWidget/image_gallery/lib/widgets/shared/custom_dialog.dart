@@ -1,3 +1,4 @@
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
@@ -20,6 +21,7 @@ class CustomDialog extends StatelessWidget {
     return ZoomIn(
       duration: const Duration(milliseconds: 300),
       child: AlertDialog(
+        scrollable: true,
         clipBehavior: Clip.antiAlias,
         actionsAlignment: MainAxisAlignment.spaceBetween,
         contentPadding:
@@ -42,7 +44,7 @@ class CustomDialog extends StatelessWidget {
             icon: const Icon(Icons.file_download_outlined),
           ),
         ],
-        title: image.imageType == ImageType.asset
+        title: image.imageUrl != null
             ? Image.asset(
                 image.imageUrl!,
                 fit: BoxFit.cover,
@@ -68,7 +70,7 @@ class CustomDialog extends StatelessWidget {
                     icon: Icons.location_on_outlined,
                   ),
                   _LabelImageInformation(
-                    label: DateFormat.yMd('es').format(image.date!),
+                    label: DateFormat.yMd('es').format(image.date),
                     textTheme: textTheme,
                     icon: Icons.date_range_outlined,
                   ),

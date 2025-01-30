@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';
 import 'package:image_gallery/widgets/shared/custom_text_field.dart';
@@ -21,11 +21,12 @@ class CustomDialogForm extends StatefulWidget {
 class _CustomDialogFormState extends State<CustomDialogForm> {
   final _formKey = GlobalKey<FormState>();
   File? imagePath;
-  String? name;
-  String? autor;
-  String? description;
+  String name = "";
+  String autor = "";
+  String description = "";
   String? source;
   bool isFavorite = false;
+  bool isValidImage = true;
 
   @override
   Widget build(BuildContext context) {
@@ -46,19 +47,19 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
           title: GestureDetector(
             onTap: () async {
               imagePath = await pickAndSaveImage();
+              isValidImage = true;
               setState(() {});
             },
-            child: imagePath != null
-                ? Image.file(
-                    width: 400,
-                    height: 300,
-                    imagePath!,
-                    fit: BoxFit.cover,
-                  )
-                : Container(
-                    padding: const EdgeInsets.all(50),
-                    color: color.primary,
-                    child: Center(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              padding: const EdgeInsets.all(50),
+              color: isValidImage ? color.primary : Colors.deepOrange,
+              child: imagePath != null
+                  ? Image.file(
+                      imagePath!,
+                      fit: BoxFit.cover,
+                    )
+                  : Center(
                       child: Column(
                         children: [
                           const Icon(
@@ -68,7 +69,9 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "Seleccione una imagen",
+                            isValidImage
+                                ? "Seleccione una imagen"
+                                : "Debe seleccionar una imagen",
                             style:
                                 text.titleLarge?.copyWith(color: Colors.white),
                             textAlign: TextAlign.center,
@@ -76,7 +79,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                         ],
                       ),
                     ),
-                  ),
+            ),
           ),
           content: Form(
             key: _formKey,
@@ -93,7 +96,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                     return null;
                   },
                   onSaved: (value) {
-                    name = value;
+                    name = value!;
                   },
                 ),
                 const SizedBox(height: 15),
@@ -108,7 +111,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                     return null;
                   },
                   onSaved: (value) {
-                    autor = value;
+                    autor = value!;
                   },
                 ),
                 const SizedBox(height: 15),
@@ -134,7 +137,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                     return null;
                   },
                   onSaved: (value) {
-                    description = value;
+                    description = value!;
                   },
                 )
               ],
@@ -158,19 +161,22 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                 ),
               ),
               onPressed: () {
+                if (imagePath == null) {
+                  setState(() {
+                    isValidImage = false;
+                  });
+                }
+
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  ImageModel image = ImageModel(
-                    name: name!,
-                    favorite: isFavorite,
-                    author: autor!,
+                  ImageModel imageFromUser = ImageModel.fromUser(
+                    imagePath,
+                    name: name,
+                    author: autor,
+                    description: description,
                     source: source,
-                    description: description!,
-                    date: DateTime.now(),
-                    imageType: ImageType.file,
-                    imageFile: imagePath,
                   );
-                  widget.addImage(image);
+                  widget.addImage(imageFromUser);
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
