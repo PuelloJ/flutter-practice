@@ -13,6 +13,7 @@ Proyectos básicos que utilizan `StatefulWidget` y `setState` para manejar el es
 1. **Contador con múltiples pantallas**
 
    - Un contador que mantiene su valor al navegar entre pantallas.
+   
      <img src="assets/counter-state/counter.state.jpg" height=300>
      <img src="assets/counter-state/counter.state2.jpg" height=300>
 
