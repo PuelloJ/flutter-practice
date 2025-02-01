@@ -51,33 +51,54 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
               setState(() {});
             },
             child: AnimatedContainer(
+              height: 300,
+              width: 400,
               duration: const Duration(milliseconds: 300),
-              padding: const EdgeInsets.all(50),
-              color: isValidImage ? color.primary : Colors.deepOrange,
+              decoration: BoxDecoration(
+                  color: isValidImage ? color.primary : Colors.redAccent,
+                  border: Border(
+                    bottom: BorderSide(
+                      color:
+                          isValidImage ? color.inversePrimary : color.primary,
+                      width: 2,
+                    ),
+                  )),
               child: imagePath != null
                   ? Image.file(
                       imagePath!,
                       fit: BoxFit.cover,
                     )
-                  : Center(
-                      child: Column(
-                        children: [
-                          const Icon(
-                            Icons.add_photo_alternate_outlined,
-                            size: 50,
-                            color: Colors.white70,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            isValidImage
-                                ? "Seleccione una imagen"
-                                : "Debe seleccionar una imagen",
-                            style:
-                                text.titleLarge?.copyWith(color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
+                  : Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.add_photo_alternate_outlined,
+                              size: 50,
+                              color: Colors.white70,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Seleccione una imagen",
+                              style: text.titleLarge
+                                  ?.copyWith(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        !isValidImage
+                            ? Positioned(
+                                child: Text(
+                                  "Debe selecionar una imagen",
+                                  style: text.bodyMedium,
+                                ),
+                                bottom: 5,
+                                left: 10,
+                              )
+                            : SizedBox(),
+                      ],
                     ),
             ),
           ),
@@ -146,7 +167,8 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
           actions: [
             FilledButton(
               style: FilledButton.styleFrom(
-                backgroundColor: Colors.deepOrange,
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -156,6 +178,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
             ),
             FilledButton(
               style: FilledButton.styleFrom(
+                foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -166,7 +189,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                     isValidImage = false;
                   });
                 }
-
+                _formKey.currentState!.save();
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   ImageModel imageFromUser = ImageModel.fromUser(

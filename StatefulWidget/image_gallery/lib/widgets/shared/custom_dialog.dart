@@ -1,4 +1,3 @@
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
@@ -65,14 +64,15 @@ class CustomDialog extends StatelessWidget {
               child: Row(
                 children: [
                   _LabelImageInformation(
-                    label: image.location,
-                    textTheme: textTheme,
-                    icon: Icons.location_on_outlined,
-                  ),
-                  _LabelImageInformation(
                     label: DateFormat.yMd('es').format(image.date),
                     textTheme: textTheme,
                     icon: Icons.date_range_outlined,
+                    divider: false,
+                  ),
+                  _LabelImageInformation(
+                    label: image.location,
+                    textTheme: textTheme,
+                    icon: Icons.location_on_outlined,
                   ),
                   _LabelImageInformation(
                     label: image.source,
@@ -149,17 +149,20 @@ class _LabelImageInformation extends StatelessWidget {
     required this.label,
     required this.textTheme,
     required this.icon,
+    this.divider = true,
   });
 
   final String? label;
   final TextTheme textTheme;
   final IconData icon;
+  final bool divider;
 
   @override
   Widget build(BuildContext context) {
-    return label != null
+    return label != null && label!.isNotEmpty
         ? Row(
             children: [
+              divider ? const _CustomVerticalDivider() : const SizedBox(),
               Icon(
                 icon,
                 size: 15,
@@ -171,7 +174,6 @@ class _LabelImageInformation extends StatelessWidget {
                 label: label!,
                 textStyle: textTheme.bodyMedium,
               ),
-              const _CustomVerticalDivider(),
             ],
           )
         : const SizedBox();
