@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';
-import 'package:image_gallery/widgets/carousel_section.dart';
-import 'package:image_gallery/widgets/image_grid.dart';
-import 'package:image_gallery/widgets/shared/custom_dialog_form.dart';
+import 'package:image_gallery/ui/carousel/carousel_section.dart';
+import 'package:image_gallery/ui/grid/image_grid.dart';
+import 'package:image_gallery/ui/dialog/custom_dialog_form.dart';
 
 class HomeGalleryScreen extends StatefulWidget {
   const HomeGalleryScreen({
@@ -39,6 +39,12 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
   void _addImage(ImageModel image) {
     setState(() {
       images.add(image);
+    });
+  }
+
+  void _changeFavorite(int index) {
+    setState(() {
+      images[index].toggleFavorite();
     });
   }
 
@@ -87,7 +93,7 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
 class _FloatingButton extends StatelessWidget {
   const _FloatingButton(this._addImage);
 
-  final void Function(ImageModel) _addImage;
+  final void Function(ImageModel image) _addImage;
 
   @override
   Widget build(BuildContext context) {

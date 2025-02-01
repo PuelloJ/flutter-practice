@@ -6,8 +6,9 @@ import 'package:image_picker/image_picker.dart';
 
 Future<List<ImageModel>> getLocalImages() async {
   List<ImageModel> images = [];
+  List<Map<String, dynamic>> localImagesData = Constants.localImageData;
 
-  for (var image in localImageData) {
+  for (var image in localImagesData) {
     images.add(ImageModel.fromJson(image));
   }
 
