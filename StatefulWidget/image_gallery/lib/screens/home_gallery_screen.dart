@@ -5,7 +5,7 @@ import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';
 import 'package:image_gallery/ui/carousel/carousel_section.dart';
 import 'package:image_gallery/ui/grid/image_grid.dart';
-import 'package:image_gallery/ui/dialog/custom_dialog_form.dart';
+import 'package:image_gallery/ui/dialog/image_form_dialog/custom_dialog_form.dart';
 
 class HomeGalleryScreen extends StatefulWidget {
   const HomeGalleryScreen({
@@ -42,6 +42,7 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
     });
   }
 
+  // TODO: Implement _changeFavorite with a state management solution
   void _changeFavorite(int index) {
     setState(() {
       images[index].toggleFavorite();
@@ -98,23 +99,15 @@ class _FloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () => showGeneralDialog(
-        context: context,
-        barrierDismissible: false,
-        pageBuilder: (ctx, anim1, anim2) => CustomDialogForm(
-          addImage: _addImage,
-        ),
-        transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
-          filter: ImageFilter.blur(
-              sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
-          child: FadeTransition(
-            opacity: anim1,
-            child: child,
-          ),
-        ),
-      ),
       icon: const Icon(Icons.add_a_photo_outlined),
       label: const Text('AGREGAR IMAGEN'),
+      onPressed: () => showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => CustomDialogForm(
+          addImage: _addImage,
+        ),
+      ),
     );
   }
 }

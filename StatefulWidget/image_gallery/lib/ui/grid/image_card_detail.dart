@@ -1,45 +1,20 @@
-import 'dart:ui';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
-import 'package:image_gallery/widgets/shared/custom_dialog.dart';
+import 'package:image_gallery/ui/ui.dart';
 
-class ImageGridSection extends StatelessWidget {
-  const ImageGridSection({
+class ImageCardDetail extends StatefulWidget {
+  const ImageCardDetail({
     super.key,
-    required this.images,
-  });
-
-  final List<ImageModel> images;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(10),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-      ),
-      itemCount: images.length,
-      itemBuilder: (context, index) {
-        final image = images[index];
-        return _ImageCardDetail(image: image);
-      },
-    );
-  }
-}
-
-class _ImageCardDetail extends StatefulWidget {
-  const _ImageCardDetail({
     required this.image,
   });
   final ImageModel image;
 
   @override
-  State<_ImageCardDetail> createState() => _ImageCardDetailState();
+  State<ImageCardDetail> createState() => _ImageCardDetailState();
 }
 
-class _ImageCardDetailState extends State<_ImageCardDetail> {
+class _ImageCardDetailState extends State<ImageCardDetail> {
   double opacity = 1.0;
 
   void _changeOpacity(double value) {
@@ -59,19 +34,10 @@ class _ImageCardDetailState extends State<_ImageCardDetail> {
         child: GestureDetector(
           onTap: () async {
             _changeOpacity(0.4);
-            showGeneralDialog(
+            showDialog(
               context: context,
-              barrierDismissible: false,
-              pageBuilder: (ctx, anim1, anim2) => CustomDialog(
+              builder: (context) => CustomDialog(
                 image: widget.image,
-              ),
-              transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
-                filter: ImageFilter.blur(
-                    sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
-                child: FadeTransition(
-                  opacity: anim1,
-                  child: child,
-                ),
               ),
             );
             await Future.delayed(const Duration(milliseconds: 200));

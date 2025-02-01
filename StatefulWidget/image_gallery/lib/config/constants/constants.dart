@@ -1,9 +1,8 @@
 class Constants {
-
   Constants._(); // Constrcutor privado para evitar instancias de esta clase
 
   static const String path = "assets/images/";
-  static const List<Map<String, dynamic>> localImageData = [
+  static const List<Map<String, dynamic>> localImageData = <Map<String, dynamic>>[
     {
       'imageUrl': "${path}ilustration.jpg",
       'name': 'Sunset Over Mountains',
