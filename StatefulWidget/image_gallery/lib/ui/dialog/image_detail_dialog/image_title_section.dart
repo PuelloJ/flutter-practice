@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:image_gallery/models/images.dart';
 
 class ImageTitleSection extends StatelessWidget {

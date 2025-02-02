@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_gallery/models/images.dart';
-import 'package:image_gallery/ui/ui.dart';
+
 import 'package:intl/intl.dart';
 
+import 'package:image_gallery/models/images.dart';
+import 'package:image_gallery/ui/ui.dart';
 import 'list_image_detail_content.dart';
 
 class ImageContentSection extends StatelessWidget {

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';
-import 'package:image_gallery/ui/carousel/carousel_section.dart';
-import 'package:image_gallery/ui/grid/image_grid.dart';
-import 'package:image_gallery/ui/dialog/image_form_dialog/custom_dialog_form.dart';
+import 'package:image_gallery/ui/ui.dart';
 
 class HomeGalleryScreen extends StatefulWidget {
   const HomeGalleryScreen({
@@ -67,23 +66,20 @@ class _HomeGalleryScreenState extends State<HomeGalleryScreen> {
           )
         ],
       ),
-      body: images.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-              ),
-            )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CarouselSection(
-                  images: images,
-                ),
-                Expanded(
-                  child: ImageGridSection(images: images),
-                )
-              ],
+      body: CircularLoading(
+        loading: (images.isEmpty),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CarouselSection(
+              images: images,
             ),
+            Expanded(
+              child: ImageGridSection(images: images),
+            )
+          ],
+        ),
+      ),
       floatingActionButton: _FloatingButton(_addImage),
     );
   }

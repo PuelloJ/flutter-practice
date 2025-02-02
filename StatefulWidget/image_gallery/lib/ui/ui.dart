@@ -13,5 +13,7 @@ export 'grid/image_grid.dart';
 // Export widgets
 export 'widgets/custom_linear_gradient.dart';
 export 'widgets/custom_text_field.dart';
+export 'widgets/custom_snackbar.dart';
 export 'widgets/text_carousel_section.dart';
+export 'widgets/circular_loading.dart';
 

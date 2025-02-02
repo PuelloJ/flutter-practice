@@ -1,5 +1,7 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+
+import 'package:animate_do/animate_do.dart';
+
 import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';
 import 'package:image_gallery/ui/dialog/image_detail_dialog/image_content_sections.dart';

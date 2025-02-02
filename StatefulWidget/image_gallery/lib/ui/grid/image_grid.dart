@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:image_gallery/models/images.dart';
+
 import 'package:image_gallery/ui/grid/image_card_detail.dart';
+import 'package:image_gallery/models/images.dart';
 
 class ImageGridSection extends StatelessWidget {
   const ImageGridSection({

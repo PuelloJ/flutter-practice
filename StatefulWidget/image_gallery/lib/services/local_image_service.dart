@@ -3,9 +3,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:image_gallery/config/constants/constants.dart';
 import 'package:image_gallery/models/images.dart';
-import 'package:image_gallery/ui/widgets/custom_snackbar.dart';
+import 'package:image_gallery/ui/ui.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
