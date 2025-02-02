@@ -200,6 +200,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                     top: 10,
                     right: 10,
                     child: IconButton.filled(
+                      tooltip: "Agregar a favoritos",
                       onPressed: () {
                         setState(() {
                           isFavorite = !isFavorite;
@@ -239,7 +240,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
                           left: 10,
                           child: Text(
                             "Debe selecionar una imagen",
-                            style: text.bodyMedium,
+                            style: text.bodyMedium!.copyWith(color: Colors.white),
                           ),
                         )
                       : SizedBox(),

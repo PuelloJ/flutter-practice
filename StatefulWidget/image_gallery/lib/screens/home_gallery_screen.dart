@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
 import 'package:image_gallery/services/local_image_service.dart';

@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery/models/images.dart';
+import 'package:image_gallery/services/local_image_service.dart';
 import 'package:image_gallery/ui/dialog/image_detail_dialog/image_content_sections.dart';
 import 'package:image_gallery/ui/dialog/image_detail_dialog/image_title_section.dart';
 
@@ -22,7 +23,7 @@ class CustomDialog extends StatelessWidget {
         scrollable: true,
         clipBehavior: Clip.antiAlias,
         actionsAlignment: MainAxisAlignment.spaceBetween,
-        contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         titlePadding: const EdgeInsets.all(0),
         title: ImageTitleSection(image: image),
         content: ImageContentSection(image: image),
@@ -36,7 +37,7 @@ class CustomDialog extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              // TODO: Implement share image
+              onShareXFileAssets(context, image);
             },
             icon: const Icon(Icons.share_outlined),
           ),

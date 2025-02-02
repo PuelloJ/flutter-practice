@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? label;
@@ -26,7 +27,8 @@ class CustomTextFormField extends StatelessWidget {
     this.onFieldSubmitted,
     required this.icon,
     this.maxLength,
-    this.maxLine, this.onSaved,
+    this.maxLine,
+    this.onSaved,
   });
 
   @override
@@ -44,7 +46,10 @@ class CustomTextFormField extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       obscureText: obscureText,
       keyboardType: keyboardType,
-      style: const TextStyle(fontSize: 18, ),
+      style: const TextStyle(
+        fontSize: 18,
+      ),
+      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\n'))],
       decoration: InputDecoration(
         floatingLabelStyle: const TextStyle(
           fontWeight: FontWeight.bold,
