@@ -15,16 +15,18 @@ Proyectos básicos que utilizan `StatefulWidget` y `setState` para manejar el es
      <img src="assets/counter-state/counter.state.jpg" height=300>
      <img src="assets/counter-state/counter.state2.jpg" height=300>
 
-   - Un contador que mantiene su valor al navegar entre pantallas.
+   - Un contador que mantiene su valor al navegar entre pantallas. ✅
    
 
 2. **Galería de imágenes local**
 
       <img src="assets/image-gallery/Image_Gallery.png">
 
-   - Selecciona imágenes de una lista y muéstralas en una nueva vista.
-   - Agregue nuevas imagenes a las ya existentes
-   - TODO: Obtener metadata de la imagen
+   - Seleccionar imágenes de una lista y mostrarlas en una nueva vista. ✅
+   - Agregar nuevas imagenes a las ya existentes. ✅
+   -
+     > [!NOTE]
+     > TODO: Obtener metadata de la imagen.
 
 
 3. **Formulario de registro**
