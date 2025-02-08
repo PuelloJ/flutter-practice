@@ -41,8 +41,7 @@ class _CustomDialogFormState extends State<CustomDialogForm> {
         child: AlertDialog(
           titlePadding: const EdgeInsets.all(0),
           clipBehavior: Clip.antiAlias,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           scrollable: true,
           title: _buildTitle(color, text),
           content: _buildContentForm(),
