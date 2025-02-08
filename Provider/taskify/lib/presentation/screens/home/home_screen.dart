@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
           children: [
             Flexible(
@@ -72,32 +73,47 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Ongoing',
+                  style: textStyle.titleLarge,
+                ),
+                TextButton(onPressed: () {}, child: Text('See all'))
+              ],
+            ),
             Flexible(
-                flex: 2,
-                child: Column(
-                  children: [
-                    _BuildTaskCard(
-                      title: "Salon App Wireframe",
-                      time: "10:00 AM - 06:00 PM",
-                      progress: 82,
-                      priority: "High",
-                      priorityColor: Colors.red,
-                      dueDate: "August 25",
-                      avatars: ["assets/avatar1.png", "assets/avatar2.png"],
-                    ),
-                    _BuildTaskCard(
-                      title: "Marketing Website",
-                      time: "02:00 PM - 05:00 PM",
-                      progress: 64,
-                      priority: "Medium",
-                      priorityColor: Colors.orange,
-                      dueDate: "August 30",
-                      avatars: ["assets/avatar3.png", "assets/avatar4.png"],
-                    ),
-                  ],
-                ))
+              flex: 2,
+              child: Column(
+                children: [
+                  _BuildTaskCard(
+                    title: "Salon App Wireframe",
+                    time: "10:00 AM - 06:00 PM",
+                    progress: 82,
+                    priority: "High",
+                    priorityColor: Colors.red,
+                    dueDate: "August 25",
+                    avatars: ["assets/avatar1.png", "assets/avatar2.png"],
+                  ),
+                  _BuildTaskCard(
+                    title: "Marketing Website",
+                    time: "02:00 PM - 05:00 PM",
+                    progress: 64,
+                    priority: "Medium",
+                    priorityColor: Colors.orange,
+                    dueDate: "August 30",
+                    avatars: ["assets/avatar3.png", "assets/avatar4.png"],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add_sharp),
       ),
     );
   }
@@ -122,6 +138,7 @@ class _ItemTaskCategorySection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
@@ -192,7 +209,7 @@ class _BuildTaskCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: priorityColor.withOpacity(0.2),
+                  color: priorityColor.withAlpha(20),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(priority,
