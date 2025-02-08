@@ -6,7 +6,7 @@ class AppTheme {
   static ThemeData get darkTheme => ThemeData.dark().copyWith(
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
-          centerTitle: true,
+          centerTitle: false,
           elevation: 0,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
