@@ -5,21 +5,20 @@ class AppTheme {
 
   static ThemeData get darkTheme => ThemeData.dark().copyWith(
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
           centerTitle: false,
           elevation: 0,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.amber,
+          foregroundColor: Colors.black,
         ),
-        scaffoldBackgroundColor: Colors.black,
-        primaryColor: Colors.orange,
-        textTheme: const TextTheme(
-          headlineLarge: TextStyle(
-            fontSize: 50,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+        primaryColor: Colors.amber,
+        // textTheme: const TextTheme(
+        //   headlineLarge: TextStyle(
+        //     fontSize: 50,
+        //     fontWeight: FontWeight.bold,
+        //     color: Colors.white,
+        //   ),
           // headline2: TextStyle(
           //   fontSize: 30,
           //   fontWeight: FontWeight.bold,
@@ -40,6 +39,6 @@ class AppTheme {
           //   fontWeight: FontWeight.bold,
           //   color: Colors.white,
           // ),
-        ),
+        // ),
       );
 }
