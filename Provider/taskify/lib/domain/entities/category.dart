@@ -1,7 +1,7 @@
 class Category {
   final String id;
   final String name;
-  final String color; // Se puede almacenar en formato hex (#FF5733)
+  final String color; // Guardar color en formato hex(#ffffff)
 
   Category({
     required this.id,
