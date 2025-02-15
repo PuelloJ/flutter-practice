@@ -4,28 +4,28 @@ import 'package:taskify/domain/entities/task.dart';
 import 'package:taskify/domain/repositories/task_repository.dart';
 
 class TaskRepositoryImpl implements TaskRepository {
-  final HiveLocalDatasorce hiveLocalDatasorce;
+  final HiveLocalDatasorce hiveLocalDataSource;
 
-  TaskRepositoryImpl({required this.hiveLocalDatasorce});
+  TaskRepositoryImpl({required this.hiveLocalDataSource});
 
   @override
   Future<void> addTask(Task task) async {
-    await hiveLocalDatasorce.addTask(TaskModel.fromEntity(task));
+    await hiveLocalDataSource.addTask(TaskModel.fromEntity(task));
   }
 
   @override
   Future<void> deleteTask(String taskId) async {
-    await hiveLocalDatasorce.deleteTask(taskId);
+    await hiveLocalDataSource.deleteTask(taskId);
   }
 
   @override
   Future<List<Task>> getTasksByCategory(String categoryId) async {
-    final List<TaskModel> tasks = await hiveLocalDatasorce.getTasksByCategory(categoryId);
+    final List<TaskModel> tasks = await hiveLocalDataSource.getTasksByCategory(categoryId);
     return tasks.map((task) => task.toEntiti()).toList();
   }
 
   @override
   Future<void> updateTask(Task task) async {
-    hiveLocalDatasorce.updateTask(TaskModel.fromEntity(task));
+    hiveLocalDataSource.updateTask(TaskModel.fromEntity(task));
   }
 }
