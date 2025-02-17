@@ -36,7 +36,7 @@ class CategoryModel {
     };
   }
 
-  Category toEntiti() {
+  Category toEntity() {
     return Category(
       id: id,
       name: name,

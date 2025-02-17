@@ -21,6 +21,6 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<List<Category>> getCategories() async {
     final List<CategoryModel> categories = await hiveLocalDataSource.getCategories();
-    return categories.map((category) => category.toEntiti()).toList();
+    return categories.map((category) => category.toEntity()).toList();
   }
 }

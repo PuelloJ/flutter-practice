@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:taskify/core/constants/task_priority.dart';
 import 'package:taskify/domain/entities/task.dart';
 part 'task_model.g.dart';
 
@@ -22,7 +23,11 @@ class TaskModel {
   @HiveField(5)
   final DateTime createdAt;
 
-  // final Priority priority;
+  @HiveField(6)
+  final DateTime endDate;
+
+  @HiveField(7)
+  final TaskPriority taskPriority;
 
   TaskModel({
     required this.id,
@@ -31,6 +36,8 @@ class TaskModel {
     required this.isCompleted,
     required this.categoryId,
     required this.createdAt,
+    required this.endDate,
+    required this.taskPriority,
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
@@ -40,6 +47,8 @@ class TaskModel {
         isCompleted: json['isCompleted'],
         categoryId: json['categoryId'],
         createdAt: json['createdAt'],
+        endDate: json['endDate'],
+        taskPriority: json['taskPriority'],
       );
 
   factory TaskModel.fromEntity(Task task) => TaskModel(
@@ -49,6 +58,8 @@ class TaskModel {
         isCompleted: task.isCompleted,
         categoryId: task.categoryId,
         createdAt: task.createdAt,
+        endDate: task.endDate,
+        taskPriority: task.taskPriority,
       );
 
   Map<String, dynamic> toJson() {
@@ -62,13 +73,16 @@ class TaskModel {
     };
   }
 
-  Task toEntiti() {
+  Task toEntity() {
     return Task(
-        id: id,
-        title: title,
-        description: description,
-        isCompleted: isCompleted,
-        categoryId: categoryId,
-        createdAt: createdAt);
+      id: id,
+      title: title,
+      description: description,
+      isCompleted: isCompleted,
+      categoryId: categoryId,
+      createdAt: createdAt,
+      endDate: endDate,
+      taskPriority: taskPriority
+    );
   }
 }

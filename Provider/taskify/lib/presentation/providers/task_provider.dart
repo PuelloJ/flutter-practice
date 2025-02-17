@@ -39,6 +39,8 @@ class TaskProvider with ChangeNotifier {
       isCompleted: !task.isCompleted,
       categoryId: task.categoryId,
       createdAt: task.createdAt,
+      endDate: task.endDate,
+      taskPriority: task.taskPriority,
     );
     await updateTask(updatedTask);
     await fetchTaskByCategory(updatedTask.categoryId);

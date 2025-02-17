@@ -21,7 +21,7 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<List<Task>> getTasksByCategory(String categoryId) async {
     final List<TaskModel> tasks = await hiveLocalDataSource.getTasksByCategory(categoryId);
-    return tasks.map((task) => task.toEntiti()).toList();
+    return tasks.map((task) => task.toEntity()).toList();
   }
 
   @override

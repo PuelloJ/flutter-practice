@@ -1,5 +1,7 @@
 // enum Priority { high, medium, low }
 
+import 'package:taskify/core/constants/task_priority.dart';
+
 class Task {
   final String id;
   final String title;
@@ -7,7 +9,8 @@ class Task {
   final bool isCompleted;
   final String categoryId;
   final DateTime createdAt;
-  // final Priority priority; 
+  final DateTime endDate;
+  final TaskPriority taskPriority; 
 
   Task({
     required this.id,
@@ -16,5 +19,7 @@ class Task {
     required this.isCompleted,
     required this.categoryId,
     required this.createdAt,
+    required this.endDate,
+    required this.taskPriority,
   });
 }
