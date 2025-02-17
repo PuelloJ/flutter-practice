@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:taskify/data/models/category_model.dart';
 import 'package:taskify/data/models/task_model.dart';
 
@@ -7,6 +7,7 @@ class HiveLocalDatasorce {
   late Box<TaskModel> taskBox;
 
   Future<void> init() async {
+    await Hive.initFlutter();
     Hive.registerAdapter(CategoryModelAdapter());
     Hive.registerAdapter(TaskModelAdapter());
 
@@ -50,5 +51,10 @@ class HiveLocalDatasorce {
 
   Future<void> deleteTask(String taskId) async {
     await taskBox.delete(taskId);
+  }
+
+  dispose() {
+    taskBox.close();
+    categoryBox.close();
   }
 }

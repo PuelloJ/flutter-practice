@@ -16,7 +16,7 @@ import 'package:taskify/presentation/providers/task_provider.dart';
 import 'package:taskify/presentation/screens/home/home_screen.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); 
   final hiveLocalDataSource = HiveLocalDatasorce();
   await hiveLocalDataSource.init();
 
@@ -26,11 +26,12 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
+        lazy: false,
         create: (_) => CategoryProvider(
           addCategory: AddCategory(repository: categoryRepository),
           getCategories: GetCategories(repository: categoryRepository),
           deleteCategory: DeleteCategory(repository: categoryRepository),
-        ),
+        )..getCategories()
       ),
       ChangeNotifierProvider(
         create: (_) => TaskProvider(
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Diseño Bento en Flutter',
+      title: 'Taskify',
       theme: AppTheme.darkTheme,
       home: HomeScreen(),
     );
