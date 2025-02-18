@@ -5,18 +5,19 @@ class CustomTextFormField extends StatelessWidget {
   final String? hint;
   final String? errorMessage;
   final int? maxLine;
+  final int? maxLength;
   final bool obscureText;
   final TextInputType? keyboardType;
   final TextStyle? style;
   final bool? readOnly;
   final Widget? suffixIcon;
-  TextEditingController? controller;
+  final TextEditingController? controller;
   final Function(String)? onChanged;
   final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
   final Future<void> Function()? selectDate;
 
-  CustomTextFormField({
+  const CustomTextFormField({
     super.key,
     this.label,
     this.hint,
@@ -32,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
     this.selectDate,
     this.suffixIcon,
     this.controller,
+    this.maxLength,
   });
 
   @override
@@ -51,9 +53,11 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       style: style,
       maxLines: maxLine,
+      maxLength: maxLength,
       readOnly: readOnly!,
       onTap: selectDate,
       textAlignVertical: TextAlignVertical.center,
+      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
         floatingLabelStyle: const TextStyle(
           color: Colors.black54,
@@ -67,7 +71,8 @@ class CustomTextFormField extends StatelessWidget {
           color: suffixIcon != null ? Colors.black : Colors.black54,
         ),
         enabledBorder: border,
-        focusedBorder: border,
+        focusedBorder:
+            border.copyWith(borderSide: BorderSide(color: Colors.black)),
         errorBorder:
             border.copyWith(borderSide: BorderSide(color: Colors.red.shade800)),
         focusedErrorBorder:

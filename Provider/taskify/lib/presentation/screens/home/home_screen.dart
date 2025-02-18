@@ -15,25 +15,22 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Taskify 📒'),
         actions: [
-          IconButton(
+          IconButton( 
             icon: const Icon(Icons.settings),
             onPressed: () {},
           ),
-          // SizedBox(
-          //   width: 10.0,
-          // ),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: categoryProvider.categories.isNotEmpty
+        child: !categoryProvider.categories.isNotEmpty
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 20,
                 children: [
                   Text(
-                    'Manage Your Task 📝',
-                    style: textStyle.displayLarge,
+                    'Manage Your Task',
+                    style: textStyle.displayLarge
                   ),
                   Expanded(
                     flex: 2,
@@ -153,9 +150,10 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         isExtended: true,
         onPressed: () => showModalBottomSheet(
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.amberAccent,
           context: context,
           isScrollControlled: true,
+          // useSafeArea: true,
           builder: (context) => BuildFormTaskSection(),
         ),
         child: Icon(Icons.add_sharp),
