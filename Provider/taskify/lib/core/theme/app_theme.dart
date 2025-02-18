@@ -17,6 +17,18 @@ class AppTheme {
           seedColor: TaskifyColors.taskifyColorPrimary,
           brightness: Brightness.dark,
         ),
+
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 2,
+            disabledForegroundColor: Colors.grey,
+            // padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+            textStyle: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+          ),
+        ),
+
         // primaryColor: TaskifyColors.taskifyColorPrimary,
         // textTheme: const TextTheme(
         //   headlineLarge: TextStyle(
